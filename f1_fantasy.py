@@ -1,5 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from requests import session
+from f1data import RaceSession
 
 scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 
@@ -21,6 +23,13 @@ RACE_RESULTS = sheet.col_values(3)[1:12]
 
 print(QUALY_RESULTS)
 print(RACE_RESULTS)
+
+session = RaceSession()
+print(session.get_qualy_results())
+print(session.get_race_results())
+
+
+
 # row = sheet.row_values(3)  # Get a specific row
 # col = sheet.col_values(3)  # Get a specific column
 # cell = sheet.cell(1,2).value  # Get the value of a specific cell
