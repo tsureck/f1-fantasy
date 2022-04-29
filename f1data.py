@@ -3,11 +3,11 @@ import fastf1
 import fastf1.plotting
 
 class RaceSession:
-    def __init__(self) -> None:
+    def __init__(self, session_name) -> None:
         fastf1.Cache.enable_cache('cache/')
-        self.qualy = fastf1.get_session(2022, 'Imola', 'Q')
+        self.qualy = fastf1.get_session(2022, session_name, 'Q')
         self.qualy.load()
-        self.race = fastf1.get_session(2022, 'Imola', 'R')
+        self.race = fastf1.get_session(2022, session_name, 'R')
         self.race.load()
 
     def get_qualy_results(self):

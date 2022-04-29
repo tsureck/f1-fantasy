@@ -1,35 +1,36 @@
+from ast import Str
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from requests import session
+
 from f1data import RaceSession
 
-scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+class F1Fantasy:
+    def __init__(self,session_name) -> None:
+        pass
+        _scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+        _creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", _scope)
+        _client = gspread.authorize(_creds)
+        self.sheet = _client.open("F1 Fantasy 2022").sheet1
+        self.data = self.sheet.get_all_records()  # Get a list of all records
+        self.session = RaceSession(session_name)
 
-creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+    def enter_Qualy(self):
+        QUALY_RESULTS = self.session.get_qualy_results()
 
-client = gspread.authorize(creds)
+        qualy_cell_list = self.sheet.range('B3:B12')
+        for i,cell in enumerate(qualy_cell_list,1):
+            print(QUALY_RESULTS[i])
+            cell.value = QUALY_RESULTS[i]
+        
+        self.sheet.update_cells(cell_list=qualy_cell_list)
 
-sheet = client.open("F1 Fantasy 2022").sheet1
+    def enter_Race(self):
+        RACE_RESULTS = self.session.get_race_results()
 
-data = sheet.get_all_records()  # Get a list of all records
-
-print(data[0])
-
-DRIVERS = ["Alex Albon", "Carlos Sainz", "Charles Leclerc", "Daniel Ricciardo", "Esteban Ocon", "Fernando Alonso", "George Russel", "Guanyu Zhou", "Kevin Magnussen", "Lance Stroll", "Lando Norris", "Lewis Hamilton", 
-"Max Verstappen", "Mick Schumacher", "Nicholas Latifi", "Pierre Gasly", "Sebastian Vettel", "Sergio Perez", "Valtteri Bottas", "Yuki Tsunoda"]
-
-QUALY_RESULTS = sheet.col_values(2)[1:12]
-RACE_RESULTS = sheet.col_values(3)[1:12]
-
-print(QUALY_RESULTS)
-print(RACE_RESULTS)
-
-session = RaceSession()
-print(session.get_qualy_results())
-print(session.get_race_results())
-
-
-
-# row = sheet.row_values(3)  # Get a specific row
-# col = sheet.col_values(3)  # Get a specific column
-# cell = sheet.cell(1,2).value  # Get the value of a specific cell
+        race_cell_list = self.sheet.range('C3:C12')
+        for i,cell in enumerate(race_cell_list,1):
+            print(RACE_RESULTS[i])
+            cell.value = RACE_RESULTS[i]
+        
+        self.sheet.update_cells(cell_list=race_cell_list)
