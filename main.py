@@ -20,7 +20,6 @@ def main():
             fantasy.enter_Race()
         else:
             error("Give either 'Q' or 'R' as input.. not " + str(sys.argv[2]))
-    # fantasy.enter_Race()
 
 
 if __name__ == '__main__':
