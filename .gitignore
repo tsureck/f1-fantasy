@@ -1,3 +1,4 @@
 creds.json
 cache/
 __pycache__/
+.vscode/
