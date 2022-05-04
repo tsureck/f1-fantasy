@@ -34,3 +34,6 @@ class F1Fantasy:
             cell.value = RACE_RESULTS[i]
         
         self.sheet.update_cells(cell_list=race_cell_list)
+
+    def get_grid_diff(self,list):
+        return self.session.get_grid_diff_list(list)
