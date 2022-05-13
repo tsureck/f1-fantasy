@@ -16,9 +16,9 @@ class RaceSession:
         and the method store the race and qualy information into member variables
         """
         fastf1.Cache.enable_cache('cache/')
-        self.qualy = fastf1.get_session(2021, session_name, 'Q')
+        self.qualy = fastf1.get_session(2022, session_name, 'Q')
         self.qualy.load()
-        self.race = fastf1.get_session(2021, session_name, 'R')
+        self.race = fastf1.get_session(2022, session_name, 'R')
         self.race.load()
 
     def get_qualy_results(self):
