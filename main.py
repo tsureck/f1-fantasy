@@ -6,8 +6,6 @@ to automaticaly enter the results for a given session.
 from distutils.log import error
 import sys
 
-from requests import session
-
 from f1_fantasy import F1Fantasy
 
 def main():
