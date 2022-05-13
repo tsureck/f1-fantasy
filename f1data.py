@@ -1,5 +1,7 @@
-from operator import index
-from matplotlib import pyplot as plt
+"""
+Module to get f1 data from the f1fast package
+"""
+
 import fastf1
 import fastf1.plotting
 
@@ -18,7 +20,6 @@ class RaceSession:
         self.qualy.load()
         self.race = fastf1.get_session(2021, session_name, 'R')
         self.race.load()
-        pass
 
     def get_qualy_results(self):
         """
