@@ -1,3 +1,8 @@
+"""
+This script is developed for a f1 fantasy league in a google spreadsheet
+to automaticaly enter the results for a given session.
+"""
+
 from distutils.log import error
 import sys
 
