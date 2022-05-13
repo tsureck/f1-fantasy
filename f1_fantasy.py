@@ -93,7 +93,7 @@ class F1Fantasy:
         players = {}
         for index, name in enumerate(self.data[0].values(), 0):
             if name not in ['QUALI RESULTS', 'RACE RESULTS', 'POSITION', '']:
-                players[name] = [str(index+1)]
+                players[name] = {'index': str(index+1)}
 
         driver_for_overtakes_index = nan
         for index, data in enumerate(self.data, 0):
@@ -102,11 +102,11 @@ class F1Fantasy:
                 break
 
         for name in players.keys():
-            if self.data[driver_for_overtakes_index][players[name][0]] != '':
-                driver_list.append(self.data[driver_for_overtakes_index][players[name][0]])
-                players[name].append(self.data[driver_for_overtakes_index][players[name][0]])
+            if self.data[driver_for_overtakes_index][players[name]['index']] != '':
+                driver_list.append(self.data[driver_for_overtakes_index][players[name]['index']])
+                players[name]['ot_driver'] = self.data[driver_for_overtakes_index][players[name]['index']]
             else:
-                players[name].append(None)
+                players[name]['ot_driver'] = None
 
         grid_diffs = self.session.get_grid_diff_list(driver_list)
 
@@ -117,8 +117,8 @@ class F1Fantasy:
         print(cell_list)
 
         for name in players.keys():
-            if players[name][1] != None:
-                cell_list[int(players[name][0]) - 1] = int(grid_diffs[players[name][1]] * bonus_on_diff)
+            if players[name]['ot_driver'] != None:
+                cell_list[int(players[name]['index']) - 1] = int(grid_diffs[players[name]['ot_driver']] * bonus_on_diff)
 
         ot_done_ind = [index for index, elem in enumerate(cell_list,0) if elem == 'Overtakes done']
 
@@ -131,3 +131,9 @@ class F1Fantasy:
             cell.value = cell_list[ot_done_ind[0]:ot_done_ind[1] + 1][i]
 
         self.sheet.update_cells(sheet_range)
+
+    def enter_constructor_battle(self):
+        pass
+
+    def enter_fastest_lap(self):
+        pass
