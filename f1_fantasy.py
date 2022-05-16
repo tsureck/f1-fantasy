@@ -63,7 +63,6 @@ class F1Fantasy:
 
         qualy_cell_list = self.sheet.range('B3:B12')
         for i,cell in enumerate(qualy_cell_list,1):
-            print(qualy_results[i])
             cell.value = qualy_results[i]
 
         self.sheet.update_cells(cell_list=qualy_cell_list)
@@ -77,7 +76,6 @@ class F1Fantasy:
 
         race_cell_list = self.sheet.range('C3:C12')
         for i,cell in enumerate(race_cell_list,1):
-            print(race_results[i])
             cell.value = race_results[i]
 
         self.sheet.update_cells(cell_list=race_cell_list)
@@ -114,8 +112,6 @@ class F1Fantasy:
         # + 3 because algo on top start from line 1 and has one line hidden not incldued
         # And we want one row deeper to enter results
         cell_list = self.sheet.row_values(driver_for_overtakes_index + 3)
-
-        print(cell_list)
 
         for name in players.keys():
             if players[name]['ot_driver'] != None:
@@ -176,12 +172,9 @@ class F1Fantasy:
     def enter_fastest_lap(self):
         laps = self.session.race.laps.pick_fastest()
         fastest_driver = [driver for (abb,driver) in zip(self.session.race.results['Abbreviation'],self.session.race.results['FullName']) if laps['Driver'] == abb][0]
-        print(fastest_driver)
         sheet_range = self.sheet.range('A1:A30')
-        print(sheet_range)
         for i, cell in enumerate(sheet_range,0):
             if cell.value == 'FASTEST LAP':
                 sheet_range[i+1].value = fastest_driver
-        print(sheet_range)
 
         self.sheet.update_cells(sheet_range)
