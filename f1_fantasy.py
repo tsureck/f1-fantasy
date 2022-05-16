@@ -3,7 +3,6 @@ Module for the F1 Fantasy Class
 """
 
 from cmath import nan
-from turtle import pos, position
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
