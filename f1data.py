@@ -52,6 +52,7 @@ class RaceSession:
         Output: Dict for Driver Name as Key and Position Difference as Value
         """
         driver_name = list(self.race.results["FullName"])
+        driver_name = [swap_fullname(name) for name in driver_name]
         grid_diff_dict = {}
         for driver in fullname_list:
             i = driver_name.index(driver)
@@ -61,3 +62,21 @@ class RaceSession:
                 start = 20
             grid_diff_dict[driver] = start - end
         return grid_diff_dict
+
+def swap_fullname(fullname):
+    """
+    Suiiii
+    """
+    name = ''
+    surname = ''
+    still_for_name = True
+    for char in fullname:
+        if char == ' ':
+            still_for_name = False
+            continue
+        if still_for_name:
+            name += char
+        else:
+            surname += char
+
+    return surname + ' ' + name

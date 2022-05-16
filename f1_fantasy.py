@@ -7,7 +7,7 @@ from turtle import pos, position
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-from f1data import RaceSession
+from f1data import RaceSession, swap_fullname
 
 class F1Fantasy:
     """
@@ -63,7 +63,7 @@ class F1Fantasy:
 
         qualy_cell_list = self.sheet.range('B3:B12')
         for i,cell in enumerate(qualy_cell_list,1):
-            cell.value = qualy_results[i]
+            cell.value = swap_fullname(qualy_results[i])
 
         self.sheet.update_cells(cell_list=qualy_cell_list)
 
@@ -76,7 +76,7 @@ class F1Fantasy:
 
         race_cell_list = self.sheet.range('C3:C12')
         for i,cell in enumerate(race_cell_list,1):
-            cell.value = race_results[i]
+            cell.value = swap_fullname(race_results[i])
 
         self.sheet.update_cells(cell_list=race_cell_list)
 
@@ -92,7 +92,7 @@ class F1Fantasy:
         players = {}
         for index, name in enumerate(self.data[0].values(), 0):
             if name not in ['QUALI RESULTS', 'RACE RESULTS', 'POSITION', '']:
-                players[name] = {'index': str(index+1)}
+                players[swap_fullname(name)] = {'index': str(index+1)}
 
         driver_for_overtakes_index = nan
         for index, data in enumerate(self.data, 0):
@@ -175,6 +175,8 @@ class F1Fantasy:
         sheet_range = self.sheet.range('A1:A30')
         for i, cell in enumerate(sheet_range,0):
             if cell.value == 'FASTEST LAP':
-                sheet_range[i+1].value = fastest_driver
+                sheet_range[i+1].value = swap_fullname(fastest_driver)
 
         self.sheet.update_cells(sheet_range)
+
+
