@@ -3,6 +3,7 @@ Module for the F1 Fantasy Class
 """
 
 from cmath import nan
+from turtle import pos, position
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -133,7 +134,54 @@ class F1Fantasy:
         self.sheet.update_cells(sheet_range)
 
     def enter_constructor_battle(self):
-        pass
+        end_pos_teams = [tup for tup in zip(self.session.race.results['TeamName'], self.session.race.results['Position'])]
+        sheet_range = self.sheet.range('A1:A30')
+        find_teams = False
+        teams = []
+        winner_row = 0
+        # Get Contructor Battle Contestents
+        for i, cell in enumerate(sheet_range,0):
+            if find_teams:
+                if cell.value == '':
+                    continue
+                if cell.value == 'WINNER ->':
+                    winner_row = i
+                    break
+                else:
+                    teams.append(cell.value)
+            if cell.value == 'CONSTRUCTOR BATTLE':
+                find_teams = True        
+
+        # Create Dictionary for Position sum
+        positions = {}
+        for team in teams:
+            positions[team] = 0
+        first_team = ''
+        # Enter End position Sum for each team
+        for entry in end_pos_teams:
+            if entry[0] in teams:
+                if first_team == '':
+                    first_team = entry[0]
+                positions[entry[0]] += entry[1]
+        if positions[teams[0]] > positions[teams[1]]:
+            winner = teams[1]
+        elif positions[teams[0]] < positions[teams[1]]:
+            winner = teams[0]
+        else:
+            winner = first_team
+
+        # Enter winner in the sheet
+        self.sheet.update_cell(winner_row+1, 2, winner)
 
     def enter_fastest_lap(self):
-        pass
+        laps = self.session.race.laps.pick_fastest()
+        fastest_driver = [driver for (abb,driver) in zip(self.session.race.results['Abbreviation'],self.session.race.results['FullName']) if laps['Driver'] == abb][0]
+        print(fastest_driver)
+        sheet_range = self.sheet.range('A1:A30')
+        print(sheet_range)
+        for i, cell in enumerate(sheet_range,0):
+            if cell.value == 'FASTEST LAP':
+                sheet_range[i+1].value = fastest_driver
+        print(sheet_range)
+
+        self.sheet.update_cells(sheet_range)

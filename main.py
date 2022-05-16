@@ -22,12 +22,16 @@ def main():
     except IndexError:
         fantasy.enter_qualy()
         fantasy.enter_race()
+        fantasy.enter_constructor_battle()
+        fantasy.enter_fastest_lap()
         fantasy.enter_ots_done()
     else:
         if sys.argv[2] == 'Q':
             fantasy.enter_qualy()
         elif sys.argv[2] == 'R':
             fantasy.enter_race()
+            fantasy.enter_constructor_battle()
+            fantasy.enter_fastest_lap()
             fantasy.enter_ots_done()
         else:
             error("Give either 'Q' or 'R' as input.. not " + str(sys.argv[2]))
