@@ -1,7 +1,4 @@
-"""
-This script is developed for a f1 fantasy league in a google spreadsheet
-to automaticaly enter the results for a given session.
-"""
+"""Script for extracting data for formula one races."""
 
 from distutils.log import error
 
