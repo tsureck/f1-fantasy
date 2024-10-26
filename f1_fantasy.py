@@ -34,7 +34,7 @@ class F1Fantasy:
     Enter the Grid Position Difference into the Sheet
 
     """
-    def __init__(self,session_name) -> None:
+    def __init__(self,year, session_name) -> None:
         """
         Constructor Method of the F1Fantasy Class
 
@@ -43,15 +43,15 @@ class F1Fantasy:
 
         Also creates a object of the f1data class and stores it in a member variable
         """
-        _scope = ["https://spreadsheets.google.com/feeds",
-                  'https://www.googleapis.com/auth/spreadsheets',
-                  "https://www.googleapis.com/auth/drive.file",
-                  "https://www.googleapis.com/auth/drive"]
-        _creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", _scope)
-        _client = gspread.authorize(_creds)
-        self.sheet = _client.open("F1 Fantasy 2022").sheet1
-        self.data = self.sheet.get_all_records()  # Get a list of all records
-        self.session = RaceSession(session_name)
+        # _scope = ["https://spreadsheets.google.com/feeds",
+        #           'https://www.googleapis.com/auth/spreadsheets',
+        #           "https://www.googleapis.com/auth/drive.file",
+        #           "https://www.googleapis.com/auth/drive"]
+        # _creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", _scope)
+        # _client = gspread.authorize(_creds)
+        # self.sheet = _client.open("F1 Fantasy 2022").sheet1
+        # self.data = self.sheet.get_all_records()  # Get a list of all records
+        self.session = RaceSession(year, session_name)
 
     def enter_qualy(self):
         """
@@ -59,12 +59,12 @@ class F1Fantasy:
         into the google spreadsheet
         """
         qualy_results = self.session.get_qualy_results()
+        pass
+        # qualy_cell_list = self.sheet.range('B3:B12')
+        # for i,cell in enumerate(qualy_cell_list,1):
+        #     cell.value = swap_fullname(qualy_results[i])
 
-        qualy_cell_list = self.sheet.range('B3:B12')
-        for i,cell in enumerate(qualy_cell_list,1):
-            cell.value = swap_fullname(qualy_results[i])
-
-        self.sheet.update_cells(cell_list=qualy_cell_list)
+        # self.sheet.update_cells(cell_list=qualy_cell_list)
 
     def enter_race(self):
         """
@@ -72,7 +72,7 @@ class F1Fantasy:
         into the google spreadsheet
         """
         race_results = self.session.get_race_results()
-
+        print(race_results)
         race_cell_list = self.sheet.range('C3:C12')
         for i,cell in enumerate(race_cell_list,1):
             cell.value = swap_fullname(race_results[i])
