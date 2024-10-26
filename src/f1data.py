@@ -28,10 +28,9 @@ class RaceSession:
         """
         qualy_results_parsed = ['QUALI RESULTS']
         for driver in self.qualy.results['FullName'][0:10]:
-            if driver != "":
-                qualy_results_parsed.append(driver)
-            else:
+            if driver == "":
                 raise TypeError("Wrong Qualy Result Format...")
+            qualy_results_parsed.append(driver)
 
         if len(qualy_results_parsed) == 10:
             raise TypeError("Wrong lenght of Qualy Results...")
@@ -92,6 +91,8 @@ class RaceSession:
         :returns: number of yellow flags
         :rtype: int
         """
+        if session != 'R':
+            print(f'Session {session} not implemented yet...')
         num_yellow = sum([1 for x in self.race.track_status['Message'].values if x == 'Yellow'])
         return num_yellow
 
