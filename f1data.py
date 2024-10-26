@@ -15,9 +15,11 @@ class RaceSession:
         Constructor method for a given race, where the race track name for a f1 track should be given
         and the method store the race and qualy information into member variables
         """
-        # fastf1.Cache.enable_cache('cache/')
-        self.race = fastf1.get_session(year, session_name, 1)
+
+        self.race = fastf1.get_session(year, session_name, 'R')
+        self.qualy = fastf1.get_session(year, session_name, 'Q')
         self.race.load()#messages=True)
+        self.qualy.load()
         pass
 
     def get_qualy_results(self):
@@ -53,21 +55,35 @@ class RaceSession:
         """
         Method for calculating the position difference from start of the race to the finish
 
-        Input: Driver Name Listq
+        Input: Driver Name List
 
         Output: Dict for Driver Name as Key and Position Difference as Value
         """
-        driver_name = list(self.race.results["FullName"])
-        driver_name = [swap_fullname(name) for name in driver_name]
+
         grid_diff_dict = {}
+        driver_name = list(self.race.results["FullName"])
+
         for driver in fullname_list:
             i = driver_name.index(driver)
             start = self.race.results["GridPosition"][i]
             end = self.race.results["Position"][i]
+            # TODO: Check if there are more edge cases (multiple drivers with pos 0.0)
             if start == 0.0:
                 start = 20
             grid_diff_dict[driver] = start - end
         return grid_diff_dict
+
+    def get_total_num_track_limits(self):
+        """ Get Total Number of track limits """
+        count = 0
+
+        for message in self.race.race_control_messages['Message']:
+            if 'TRACK LIMIT' in message and \
+                    'DELETED' in message and \
+                    'NEXT LAP' not in message and \
+                    'UDNDER INVESTIGATION' not in message:
+                count += 1
+        return count
 
 def swap_fullname(fullname):
     """
