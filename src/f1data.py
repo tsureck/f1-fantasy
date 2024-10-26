@@ -10,7 +10,7 @@ class RaceSession:
     This Class uses the f1fast package to give out information of a certain race
     to use that information in a f1 fantasy google spreadsheet
     """
-    def __init__(self, year, session_name) -> None:
+    def __init__(self, year: int, session_name: int | str) -> None:
         """
         Constructor method for a given race, where the race track name for a f1 track should be given
         and the method store the race and qualy information into member variables
@@ -22,7 +22,7 @@ class RaceSession:
         self.qualy.load()
         pass
 
-    def get_qualy_results(self):
+    def get_qualy_results(self) -> list[str]:
         """
         Method for formatting and returning the qualifying results
 
@@ -39,7 +39,7 @@ class RaceSession:
             raise TypeError("Wrong lenght of Qualy Results...")
         return qualy_results_parsed
 
-    def get_race_results(self):
+    def get_race_results(self) -> list[str]:
         """
         Method for formatting and returning the race results of a qualy session
 
@@ -51,7 +51,7 @@ class RaceSession:
         # TODO: Fail check -> If len(race_results_parsed) == 1 fail
         return race_results_parsed
 
-    def get_grid_diff_list(self, fullname_list):
+    def get_grid_diff_list(self, fullname_list: list[str]) -> dict:
         """
         Method for calculating the position difference from start of the race to the finish
 
@@ -73,7 +73,7 @@ class RaceSession:
             grid_diff_dict[driver] = start - end
         return grid_diff_dict
 
-    def get_total_num_track_limits(self):
+    def get_total_num_track_limits(self) -> int:
         """ Get Total Number of track limits """
         count = 0
 
@@ -84,3 +84,6 @@ class RaceSession:
                     'UDNDER INVESTIGATION' not in message:
                 count += 1
         return count
+
+    def get_driver_track_limits(self, driver: str) -> int:
+        pass
