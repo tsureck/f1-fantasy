@@ -93,8 +93,10 @@ class RaceSession:
         """
         if session != 'R':
             print(f'Session {session} not implemented yet...')
-        num_yellow = sum([1 for x in self.race.track_status['Message'].values if x == 'Yellow'])
-        return num_yellow
+
+        messages = [x for x in self.race.track_status['Message'].values \
+            if x == 'Yellow']
+        return sum(messages)
 
     def get_driver_track_limits(self, driver: str) -> int:
         """Return number of track limits of specified driver.
