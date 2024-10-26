@@ -1,0 +1,7 @@
+[lint]
+extend-select = [
+    "E501",
+    "D",    # pydocstyle
+    "W293", # blank line whitespace
+    "W292", # new line at EoF
+]
