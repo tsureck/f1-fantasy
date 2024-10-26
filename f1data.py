@@ -4,7 +4,6 @@ Module to get f1 data from the f1fast package
 
 import fastf1
 import fastf1.plotting
-from pyparsing import Each
 
 class RaceSession:
     """
@@ -20,12 +19,10 @@ class RaceSession:
         self.race = fastf1.get_session(year, session_name, 1)
         self.race.load()#messages=True)
         pass
-        # self.race = fastf1.get_session(year, session_name, 'R')
-        # self.race.load()#messages=True)
 
     def get_qualy_results(self):
         """
-        Method for formatting and returning the qualyfying results of a qualy session
+        Method for formatting and returning the qualifying results
 
         Output: Dictionary with Full Driver Name as Key and Position as value
         """
