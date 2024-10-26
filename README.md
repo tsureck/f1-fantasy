@@ -3,30 +3,38 @@
 This project uses the fastf1 package and google spreadsheet api package, to calculate the metrics
 used in a custom f1 fantasy sheet and enter them in the sheet.
 
-# Metrics calculated
+This will be modified to only calculate metrics and not interact with the google spreadsheet,
+as this is just unnecessary complexity.
 
-The script calculates different categories besides the top 10 from the qualifying and the race.
+# Installation
 
-Those are predefined in the Google Spreadsheet with this given structure:
+## Python3.10
 
-![](static/Spreadsheet_Structure.png)
+[Ubuntu 20 Python3.10](https://gist.github.com/rutcreate/c0041e842f858ceb455b748809763ddb)
 
-So we have the following Metrics:
+## Poetry
 
-* Top 10 Qualy
-* Top 10 Race
-* Constructor Battle
-    - Battle between 2 or 3 teams who finishes better after the race
-* Fastest Lap
-* Driver for Overtakes
-    - Here a player can select a driver for which the positional difference from grid to race end determines the points he gets times a multiplier
+Install Poetry with Python:
+``` bash
+python3.10 -m pip install poetry
+```
+
+Install python environment with poetry
+```bash
+poetry config virtualenvs.in-project true
+poetry install
+```
 
 # How to run it
 (WIP! First you need to set up a mail that serves for the google spreadsheet api to enter and read stuff.) 
 
 Then you can start the script in the following way:
 ```bash
-python main.py <Race Name> <Session>
+# Currently for testing purpose
+poetry run python main.py
+
+# Later it will be
+poetry run python main.py <Race Name> <Session>
 ```
 
 Here `<Race Name>` stands for the city of the Race
