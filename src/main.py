@@ -21,10 +21,10 @@ def main():
     ### Working Methods
     # Qualy Results
     fantasy.get_qualy_results()
-    
+
     # Race Results
     fantasy.get_race_results()
-    
+
     # Grid to Checkered Flag Position Difference
     drivers = ['George Russell', 'Lewis Hamilton']
     fantasy.get_grid_diff_list(drivers)

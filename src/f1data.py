@@ -84,21 +84,3 @@ class RaceSession:
                     'UDNDER INVESTIGATION' not in message:
                 count += 1
         return count
-
-def swap_fullname(fullname):
-    """
-    Suiiii
-    """
-    name = ''
-    surname = ''
-    still_for_name = True
-    for char in fullname:
-        if char == ' ':
-            still_for_name = False
-            continue
-        if still_for_name:
-            name += char
-        else:
-            surname += char
-
-    return surname + ' ' + name
