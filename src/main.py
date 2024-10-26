@@ -8,15 +8,15 @@ from distutils.log import error
 from f1data import RaceSession
 
 def main():
-    """
-    Main function
-    """ 
+    """Extract data from fastf1."""
     session_name = 'United State'
     if session_name in ('Q', 'R'):
         error("Session Name must be a race track not Q or R")
 
     fantasy = RaceSession(2024, session_name)
-    num_yellow = sum([1 for x in fantasy.race.track_status['Message'].values if x == 'Yellow'])
+
+    # Number of yellow flags
+    fantasy.get_num_yellow_flags()
 
     ### Working Methods
     # Qualy Results

@@ -1,21 +1,19 @@
-"""
-Module to get f1 data from the f1fast package
-"""
+"""Module to get f1 data from the f1fast package."""
 
 import fastf1
 import fastf1.plotting
 
 class RaceSession:
-    """
-    This Class uses the f1fast package to give out information of a certain race
-    to use that information in a f1 fantasy google spreadsheet
-    """
-    def __init__(self, year: int, session_name: int | str) -> None:
-        """
-        Constructor method for a given race, where the race track name for a f1 track should be given
-        and the method store the race and qualy information into member variables
-        """
+    """Class for extracting f1 data from fastf1."""
 
+    def __init__(self, year: int, session_name: int | str) -> None:
+        """Initialize Race Session Class.
+
+        :param year: year of the race
+        :type year: int
+        :param session_name: identifier of the session
+        :type session_name: int | str
+        """
         self.race = fastf1.get_session(year, session_name, 'R')
         self.qualy = fastf1.get_session(year, session_name, 'Q')
         self.race.load()#messages=True)
@@ -23,10 +21,10 @@ class RaceSession:
         pass
 
     def get_qualy_results(self) -> list[str]:
-        """
-        Method for formatting and returning the qualifying results
+        """Return the qualifying results.
 
-        Output: Dictionary with Full Driver Name as Key and Position as value
+        :returns: qualy result with full drivername
+        :rtype: list[str]
         """
         qualy_results_parsed = ['QUALI RESULTS']
         for driver in self.qualy.results['FullName'][0:10]:
@@ -40,10 +38,10 @@ class RaceSession:
         return qualy_results_parsed
 
     def get_race_results(self) -> list[str]:
-        """
-        Method for formatting and returning the race results of a qualy session
+        """Return the race results of a qualy session.
 
-        Output: Dictionary with Full Driver Name as Key and Position as value
+        :returns: race result with full drivername
+        :rtype: list[str]
         """
         race_results_parsed = ['RACE RESULTS']
         for driver in self.race.results['FullName'][0:10]:
@@ -52,14 +50,11 @@ class RaceSession:
         return race_results_parsed
 
     def get_grid_diff_list(self, fullname_list: list[str]) -> dict:
-        """
-        Method for calculating the position difference from start of the race to the finish
+        """Calculate the position difference in the race.
 
         Input: Driver Name List
-
         Output: Dict for Driver Name as Key and Position Difference as Value
         """
-
         grid_diff_dict = {}
         driver_name = list(self.race.results["FullName"])
 
@@ -74,7 +69,11 @@ class RaceSession:
         return grid_diff_dict
 
     def get_total_num_track_limits(self) -> int:
-        """ Get Total Number of track limits """
+        """Get Total Number of track limits.
+
+        :returns: total number of track limits
+        :rtype: int
+        """
         count = 0
 
         for message in self.race.race_control_messages['Message']:
@@ -85,5 +84,21 @@ class RaceSession:
                 count += 1
         return count
 
+    def get_num_yellow_flags(self, session: str = 'R') -> int:
+        """Get number of yellow flags per session.
+
+        :param session: identifier of session (default = 'R')
+        :type session: str
+        :returns: number of yellow flags
+        :rtype: int
+        """
+        num_yellow = sum([1 for x in self.race.track_status['Message'].values if x == 'Yellow'])
+        return num_yellow
+
     def get_driver_track_limits(self, driver: str) -> int:
+        """Return number of track limits of specified driver.
+
+        :returns: number of track limits for specified driver
+        :rtype: int
+        """
         pass
