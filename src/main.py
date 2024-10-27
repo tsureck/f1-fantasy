@@ -3,7 +3,6 @@ from distutils.log import error
 
 from f1data import RaceSession
 
-
 def main():
     """Extract data from fastf1."""
     session_name = 'United State'

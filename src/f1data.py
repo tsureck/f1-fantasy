@@ -1,8 +1,8 @@
 """Module to get f1 data from the f1fast package."""
+import re
 
 import fastf1
 import fastf1.plotting
-
 
 class RaceSession:
     """Class for extracting f1 data from fastf1."""
@@ -105,8 +105,6 @@ class RaceSession:
         :returns: Number of lapped cars of the race
         :rtype: int
         """
-        import re
-
         re_plus_lap = r"(\+\d Lap)"
         driver_status = self.race.results['Status'].values
         return sum((1 for status in driver_status if re.match(re_plus_lap, status)))
