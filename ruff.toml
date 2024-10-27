@@ -12,6 +12,7 @@ extend-select = [
     "W293",     # blank line whitespace
     "W292",     # new line at EoF
     "PLR1702",  # Too many nested blocks
+    "I",
 ]
 
 [lint.pylint]

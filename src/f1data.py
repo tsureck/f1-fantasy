@@ -3,6 +3,7 @@
 import fastf1
 import fastf1.plotting
 
+
 class RaceSession:
     """Class for extracting f1 data from fastf1."""
 
@@ -109,6 +110,14 @@ class RaceSession:
         re_plus_lap = r"(\+\d Lap)"
         driver_status = self.race.results['Status'].values
         return sum((1 for status in driver_status if re.match(re_plus_lap, status)))
+
+    def get_num_lap_leaders(self) -> int:
+        """Return number of lap leaders in a race.
+
+        :returns: number of cars that lead the race
+        :rtype: int
+        """
+        self.race
 
     def get_driver_track_limits(self, driver: str) -> int:
         """Return number of track limits of specified driver.
