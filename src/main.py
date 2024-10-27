@@ -12,9 +12,6 @@ def main():
 
     fantasy = RaceSession(2024, session_name)
 
-    # Number of yellow flags
-    fantasy.get_num_yellow_flags()
-
     ### Working Methods
     # Qualy Results
     fantasy.get_qualy_results()
@@ -25,6 +22,12 @@ def main():
     # Grid to Checkered Flag Position Difference
     drivers = ['George Russell', 'Lewis Hamilton']
     fantasy.get_grid_diff_list(drivers)
+
+    # Number of lapped cars without DNFs
+    fantasy.get_num_lapped_cars()
+
+    # Number of yellow flags
+    fantasy.get_num_yellow_flags()
 
 if __name__ == '__main__':
     main()

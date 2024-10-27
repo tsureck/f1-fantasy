@@ -98,6 +98,18 @@ class RaceSession:
             if x == 'Yellow']
         return sum(messages)
 
+    def get_num_lapped_cars(self) -> int:
+        """Return number of lapped cars in a race without DNF.
+
+        :returns: Number of lapped cars of the race
+        :rtype: int
+        """
+        import re
+
+        re_plus_lap = r"(\+\d Lap)"
+        driver_status = self.race.results['Status'].values
+        return sum((1 for status in driver_status if re.match(re_plus_lap, status)))
+
     def get_driver_track_limits(self, driver: str) -> int:
         """Return number of track limits of specified driver.
 
