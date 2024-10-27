@@ -1,12 +1,17 @@
+line-length = 120
+indent-width = 4
+
+target-version = "py310"
+
 [lint]
-preview = true # required for PLR1702
+preview = true  # required for PLR1702
 
 extend-select = [
-    "E501",
-    "D",       # pydocstyle
-    "W293",    # blank line whitespace
-    "W292",    # new line at EoF
-    "PLR1702", # Too many nested blocks
+    "E501",     # line to long
+    "D",        # pydocstyle
+    "W293",     # blank line whitespace
+    "W292",     # new line at EoF
+    "PLR1702",  # Too many nested blocks
 ]
 
 [lint.pylint]
