@@ -1,7 +1,13 @@
 [lint]
+preview = true # required for PLR1702
+
 extend-select = [
     "E501",
-    "D",    # pydocstyle
-    "W293", # blank line whitespace
-    "W292", # new line at EoF
+    "D",       # pydocstyle
+    "W293",    # blank line whitespace
+    "W292",    # new line at EoF
+    "PLR1702", # Too many nested blocks
 ]
+
+[lint.pylint]
+max-nested-blocks = 5
